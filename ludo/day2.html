@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ludo Game</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: sans-serif;
+      }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .main {
+        width: 400px;
+        height: 500px;
+        border: 2px solid #000;
+        border-radius: 20px;
+      }
+      .ludo {
+        width: 200px;
+        height: 200px;
+        border-radius: 20px;
+        margin: 60px auto 50px;
+      }
+      .ludo img {
+        width: 100%;
+        height: 100%;
+        border-radius: 20px;
+        border: 2px solid #000;
+        box-shadow: 0px 0px 10px #00000090;
+      }
+      .animate {
+        animation: rolls 2.5s 1;
+      }
+      @keyframes rolls {
+        0% {
+          transform: rotateX(0) rotateY(0) rotateZ(0) scale(1);
+        }
+        50% {
+          transform: rotateX(720deg) rotateY(720deg) rotateZ(720deg) scale(2);
+        }
+        100% {
+          transform: rotateX(720deg) rotateY(720deg) rotateZ(720deg) scale(1);
+        }
+      }
+      #roll {
+        width: 100px;
+        height: 40px;
+        margin-left: 50%;
+        margin-top: 80px;
+        transform: translateX(-50px);
+        background:transparent;
+        border: 2px solid #000;
+        border-radius: 20px;
+      }
+      #roll:hover{
+        background: #000;
+        color: #fff;
+      }
+      p {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+      }
+      p span {
+        font-size: 25px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <div class="ludo" id="ludo">
+        <img src="dice5.jpg" id="image" />
+      </div>
+      <p>Dice Number is : <span id="diseNum">5</span></p>
+      <button id="roll">Roll</button>
+    </div>
+
+    <script>
+      const ludo = document.getElementById("ludo");
+      const rollBtn = document.getElementById("roll");
+      const image = document.getElementById("image");
+      const diseNum = document.getElementById("diseNum");
+
+      rollBtn.addEventListener("click", () => {
+        const randomNum = Math.floor(Math.random() * 6) + 1;
+
+        image.src = `dice${randomNum}.jpg`;
+        diseNum.textContent = randomNum;
+
+        image.classList.remove("animate");
+        void image.offsetWidth; // Force Reflow (trick to restart animation)
+        image.classList.add("animate");
+      });
+    </script>
+  </body>
+</html>
