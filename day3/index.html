@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Real time Character Count</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html, body {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #inputText {
+        margin: 20px 0 10px;
+        width: 280px;
+        height: 120px;
+        padding: 10px;
+        font-size: 14px;
+      }
+      p {
+        text-align: center;
+      }
+      #count {
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h2>Real time Character Count</h2>
+      <textarea id="inputText" placeholder="Start Writing..."></textarea>
+      <p id="textAlert">Character Count : <span id="count">0/100</span></p>
+      <p id="overText"></p>
+    </div>
+
+    <script>
+      const inputText = document.getElementById('inputText')
+      const count = document.getElementById('count')
+      const textAlert = document.getElementById('textAlert')
+      const overText = document.getElementById('overText')
+
+      inputText.addEventListener("input",()=>{
+        const inputValue = inputText.value.length
+        if(inputValue > 100){
+          overText.textContent = '⚠️ Character limit exceeded!'
+          textAlert.style.color = 'red'
+          overText.style.color = 'red'
+        } else {
+          overText.textContent = ''
+          if(inputValue >= 95 && inputValue <= 100){
+          textAlert.style.color = 'red'
+        } else if(inputValue > 80){
+          textAlert.style.color = 'orange'
+        } else {
+          textAlert.style.color = "black"
+        }
+        }
+
+        count.textContent = `${inputValue}/100`
+      })
+      inputText.value = ''
+    </script>
+  </body>
+</html>
