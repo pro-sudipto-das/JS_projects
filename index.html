@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Name</title>
+  <style>
+  body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    max-width: 700px;
+    margin: 150px auto 0;
+  }
+
+  textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    line-height: 30px;
+    height: 200px;
+  }
+
+  #startBtn {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+  </style>
+</head>
+<body>
+  
+  
+  <h2>⌨️ Typing Speed Tester</h2>
+<p id="textToType">The quick brown fox jumps over the lazy dog.</p>
+
+<textarea id="userInput" rows="5" cols="50" placeholder="Start typing here..."></textarea>
+
+<p>⏱ Time Left: <span id="timeLeft">30</span> seconds</p>
+<p>📊 Words Typed: <span id="wordCount">0</span></p>
+<p>⚡ Speed: <span id="speed">0</span> WPM</p>
+
+<button id="startBtn">▶ Start</button>
+
+  
+  
+  
+  <script>
+    const textToType = document.getElementById("textToType");
+const userInput = document.getElementById("userInput");
+const timeLeft = document.getElementById("timeLeft");
+const wordCount = document.getElementById("wordCount");
+const speed = document.getElementById("speed");
+const startBtn = document.getElementById("startBtn");
+
+let time = 30;
+let interval;
+let isStarted = false;
+
+startBtn.addEventListener("click", () => {
+  time = 30;
+  timeLeft.textContent = time;
+  userInput.value = "";
+  wordCount.textContent = "0";
+  speed.textContent = "0";
+  isStarted = true;
+  userInput.disabled = false;
+  userInput.focus();
+
+  clearInterval(interval);
+  interval = setInterval(() => {
+    time--;
+    timeLeft.textContent = time;
+
+    if (time <= 0) {
+      clearInterval(interval);
+      userInput.disabled = true;
+      calculateSpeed();
+    }
+  }, 1000);
+});
+
+userInput.addEventListener("input", () => {
+  const words = userInput.value.trim().split(/\s+/).filter(word => word !== "");
+  wordCount.textContent = words.length;
+});
+
+function calculateSpeed() {
+  const totalWords = userInput.value.trim().split(/\s+/).filter(word => word !== "").length;
+  speed.textContent = (totalWords * 2); // WPM = words / 0.5 minute
+}
+
+  </script>
+</body>
+</html>
